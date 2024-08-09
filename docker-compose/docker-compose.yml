@@ -1,0 +1,26 @@
+#在项目根目录下创建文件docker-compose.yml
+version: "4"           #声明版本
+services:             #声明服务
+  consul:             #服务1名称为consul，并且这个服务能在同一网络进行访问
+    image: consul:1.15.4     #镜像
+    ports:
+      - "8500:8500"
+  jaeger:             #服务2
+    image: jaegertracing/all-in-one
+    ports:
+      - "16686:16686"
+      - "6831:6831/udp"
+  hystrix:             #服务3
+    image: siamaksade/hystrix-dashboard:1.0.27
+    ports:
+      - "8080:8080"
+  prometheus:
+    image: bitnami/prometheus
+    volumes:
+      -  ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
