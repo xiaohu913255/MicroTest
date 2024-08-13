@@ -4,11 +4,13 @@ import (
 	"context"
 	"fmt"
 	consul2 "github.com/go-micro/plugins/v4/registry/consul"
-	opentracing2 "github.com/go-micro/plugins/v4/wrapper/trace/opentracing"
+	opentracingFn "github.com/go-micro/plugins/v4/wrapper/trace/opentracing"
+	"github.com/opentracing/opentracing-go"
+	"github.com/xiaohu913255/MicroTest/common"
+	service_product "github.com/xiaohu913255/MicroTest/product/proto/product"
+	"go-micro.dev/v4"
 	"go-micro.dev/v4/registry"
 	"log"
-	"product/common"
-	go_micro_service_product "product/proto/product"
 )
 
 func main() {
@@ -33,18 +35,18 @@ func main() {
 		//添加注册中心
 		micro.Registry(consul),
 		//绑定链路追踪
-		micro.WrapClient(opentracing2.NewClientWrapper(opentracing.GlobalTracer())),
+		micro.WrapClient(opentracingFn.NewClientWrapper(opentracing.GlobalTracer())),
 	)
 
-	productService := go_micro_service_product.NewProductService("go.micro.service.product", service.Client())
+	productService := service_product.NewProductService("go.micro.service.product", service.Client())
 
-	productAdd := &go_micro_service_product.ProductInfo{
+	productAdd := &service_product.ProductInfo{
 		ProductName:        "imooc",
 		ProductSku:         "cap",
 		ProductPrice:       1.1,
 		ProductDescription: "imooc-cap",
 		ProductCategoryId:  1,
-		ProductImage: []*go_micro_service_product.ProductImage{
+		ProductImage: []*service_product.ProductImage{
 			{
 				ImageName: "cap-image",
 				ImageCode: "capimage01",
@@ -56,13 +58,13 @@ func main() {
 				ImageUrl:  "capimage02",
 			},
 		},
-		ProductSize: []*go_micro_service_product.ProductSize{
+		ProductSize: []*service_product.ProductSize{
 			{
 				SizeName: "cap-size",
 				SizeCode: "cap-size-code",
 			},
 		},
-		ProductSeo: &go_micro_service_product.ProductSeo{
+		ProductSeo: &service_product.ProductSeo{
 			SeoTitle:       "cap-seo",
 			SeoKeywords:    "cap-seo",
 			SeoDescription: "cap-seo",

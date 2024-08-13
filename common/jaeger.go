@@ -12,7 +12,7 @@ func NewTracer(serviceName string, addr string) (opentracing.Tracer, io.Closer, 
 	cfg := &jaegercfg.Configuration{
 		ServiceName: serviceName,
 		Sampler: &jaegercfg.SamplerConfig{
-			Type:  jaeger.SamplerTypeConst,
+			Type:  "const",
 			Param: 1,
 		},
 		Reporter: &jaegercfg.ReporterConfig{

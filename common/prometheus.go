@@ -2,10 +2,14 @@ package common
 
 import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	log "github.com/prometheus/common/promlog"
+	//"github.com/prometheus/common/log"
+	_ "github.com/prometheus/common/promlog"
 	"net/http"
 	"strconv"
+	"testing"
 )
+
+var t *testing.T
 
 func PrometheusBoot(port int) {
 	http.Handle("/metrics", promhttp.Handler())
@@ -13,8 +17,8 @@ func PrometheusBoot(port int) {
 	go func() {
 		err := http.ListenAndServe("0.0.0.0:"+strconv.Itoa(port), nil)
 		if err != nil {
-			log.Fatal("启动失败")
+			t.Fatal("启动失败")
 		}
-		log.Info("监控启动,端口为：" + strconv.Itoa(port))
+		//t.Info("监控启动,端口为：" + strconv.Itoa(port))
 	}()
 }

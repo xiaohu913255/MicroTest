@@ -5,10 +5,13 @@ import (
 	"fmt"
 	"github.com/afex/hystrix-go/hystrix"
 	consul2 "github.com/go-micro/plugins/v4/registry/consul"
-	opentracing2 "github.com/go-micro/plugins/v4/wrapper/trace/opentracing"
+	"github.com/go-micro/plugins/v4/wrapper/select/roundrobin"
+	opentracingFn "github.com/go-micro/plugins/v4/wrapper/trace/opentracing"
+	"github.com/opentracing/opentracing-go"
 	service_cart "github.com/xiaohu913255/MicroTest/cart/proto/cart"
 	"github.com/xiaohu913255/MicroTest/cartApi/common"
 	"github.com/xiaohu913255/MicroTest/cartApi/handler"
+	"go-micro.dev/v4"
 	"go-micro.dev/v4/client"
 	log "go-micro.dev/v4/logger"
 	"go-micro.dev/v4/registry"
@@ -53,7 +56,7 @@ func main() {
 		//添加 consul 注册中心
 		micro.Registry(consul),
 		//添加链路追踪
-		micro.WrapClient(opentracing2.NewClientWrapper(opentracing.GlobalTracer())),
+		micro.WrapClient(opentracingFn.NewClientWrapper(opentracing.GlobalTracer())),
 		//添加熔断
 		micro.WrapClient(NewClientHystrixWrapper()),
 		//添加负载均衡

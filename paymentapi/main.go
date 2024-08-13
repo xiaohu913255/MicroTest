@@ -5,7 +5,8 @@ import (
 	"github.com/afex/hystrix-go/hystrix"
 	consul2 "github.com/go-micro/plugins/v4/registry/consul"
 	"github.com/go-micro/plugins/v4/wrapper/select/roundrobin"
-	opentracing2 "github.com/go-micro/plugins/v4/wrapper/trace/opentracing"
+	opentracingFn "github.com/go-micro/plugins/v4/wrapper/trace/opentracing"
+	"github.com/opentracing/opentracing-go"
 	service_payment "github.com/xiaohu913255/MicroTest/payment/proto/payment"
 	"github.com/xiaohu913255/MicroTest/paymentApi/common"
 	"github.com/xiaohu913255/MicroTest/paymentApi/handler"
@@ -57,9 +58,9 @@ func main() {
 		micro.Address("0.0.0.0:9092"),
 		//注册中心
 		micro.Registry(consul),
-		micro.WrapHandler(opentracing2.NewHandlerWrapper(opentracing.GlobalTracer())),
+		micro.WrapHandler(opentracingFn.NewHandlerWrapper(opentracing.GlobalTracer())),
 		//作为服务端访问时候生效
-		micro.WrapClient(opentracing2.NewClientWrapper(opentracing.GlobalTracer())),
+		micro.WrapClient(opentracingFn.NewClientWrapper(opentracing.GlobalTracer())),
 		//熔断
 		micro.WrapClient(NewClientHystrixWrapper()),
 		//负载均衡

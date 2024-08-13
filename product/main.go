@@ -1,12 +1,14 @@
 package main
 
 import (
-	opentracing2 "github.com/go-micro/plugins/v4/wrapper/trace/opentracing"
+	opentracingFn "github.com/go-micro/plugins/v4/wrapper/trace/opentracing"
 	"github.com/jinzhu/gorm"
+	"github.com/opentracing/opentracing-go"
 	"github.com/xiaohu913255/MicroTest/product/common"
 	"github.com/xiaohu913255/MicroTest/product/domain/repository"
 	service2 "github.com/xiaohu913255/MicroTest/product/domain/service"
 	"github.com/xiaohu913255/MicroTest/product/handler"
+	"go-micro.dev/v4"
 	log "go-micro.dev/v4/logger"
 	"go-micro.dev/v4/registry"
 
@@ -60,7 +62,7 @@ func main() {
 		//添加注册中心
 		micro.Registry(consul),
 		//绑定链路追踪
-		micro.WrapHandler(opentracing2.NewHandlerWrapper(opentracing.GlobalTracer())),
+		micro.WrapHandler(opentracingFn.NewHandlerWrapper(opentracing.GlobalTracer())),
 	)
 
 	// Initialise service

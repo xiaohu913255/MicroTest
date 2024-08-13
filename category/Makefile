@@ -4,8 +4,8 @@ proto:
 
 .PHONY: build
 build:
-	@echo Building for Linux...
-    GOOS=linux GOARCH=amd64 go build -o order-service *.go
+	go build -o order-service *.go
+
 .PHONY: test
 test:
 	go test -v ./... -cover

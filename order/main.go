@@ -4,7 +4,7 @@ import (
 	consul2 "github.com/go-micro/plugins/v4/registry/consul"
 	"github.com/go-micro/plugins/v4/wrapper/monitoring/prometheus"
 	ratelimit "github.com/go-micro/plugins/v4/wrapper/ratelimiter/uber"
-	opentracing2 "github.com/go-micro/plugins/v4/wrapper/trace/opentracing"
+	opentracingFn "github.com/go-micro/plugins/v4/wrapper/trace/opentracing"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/opentracing/opentracing-go"
@@ -71,7 +71,7 @@ func main() {
 		//添加consul 注册中心
 		micro.Registry(consul),
 		//添加链路追踪
-		micro.WrapHandler(opentracing2.NewHandlerWrapper(opentracing.GlobalTracer())),
+		micro.WrapHandler(opentracingFn.NewHandlerWrapper(opentracing.GlobalTracer())),
 		//添加限流
 		micro.WrapHandler(ratelimit.NewHandlerWrapper(QPS)),
 		//添加监控

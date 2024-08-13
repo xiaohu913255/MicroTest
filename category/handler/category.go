@@ -2,7 +2,6 @@ package handler
 
 import (
 	"context"
-	"github.com/prometheus/common/log"
 	"github.com/xiaohu913255/MicroTest/category/domain/model"
 	"github.com/xiaohu913255/MicroTest/category/domain/service"
 	category "github.com/xiaohu913255/MicroTest/category/proto/category"
@@ -106,7 +105,6 @@ func categoryToResponse(categorySlice []model.Category, response *category.FindA
 		cr := &category.CategoryResponse{}
 		err := common.SwapTo(cg, cr)
 		if err != nil {
-			log.Error(err)
 			break
 		}
 		response.Category = append(response.Category, cr)

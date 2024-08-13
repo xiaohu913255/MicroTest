@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/prometheus/common/log"
+	log "github.com/prometheus/common/log"
 	cart "github.com/xiaohu913255/MicroTest/cart/proto/cart"
 	cartApi "github.com/xiaohu913255/MicroTest/cartApi/proto/cartApi"
 	"strconv"

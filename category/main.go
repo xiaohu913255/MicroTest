@@ -1,17 +1,18 @@
 package main
 
 import (
-	"category/common"
-	"category/domain/repository"
-	service2 "category/domain/service"
-	"category/handler"
 	"github.com/go-micro/plugins/v4/registry/consul"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/xiaohu913255/MicroTest/category/domain/repository"
+	service2 "github.com/xiaohu913255/MicroTest/category/domain/service"
+	"github.com/xiaohu913255/MicroTest/category/handler"
+	"github.com/xiaohu913255/MicroTest/common"
+	"go-micro.dev/v4"
 	log "go-micro.dev/v4/logger"
 	"go-micro.dev/v4/registry"
 
-	category "category/proto/category"
+	category "github.com/xiaohu913255/MicroTest/category/proto/category"
 )
 
 func main() {
